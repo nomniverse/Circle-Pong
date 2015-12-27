@@ -5,12 +5,17 @@ using System;
 
 public class BorderScript : MonoBehaviour {
 
+    public GameObject playerPaddle, aiPaddle;
+
     public Text p1Score, p2Score;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    private int score1, score2;
+
+    // Use this for initialization
+    void Start () {
+        score1 = Int32.Parse(p1Score.text);
+        score2 = Int32.Parse(p2Score.text);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,16 +26,33 @@ public class BorderScript : MonoBehaviour {
     {
         if (collider.gameObject.name == "Ball")
         {
-            int score1 = Int32.Parse(p1Score.text);
-            int score2 = Int32.Parse(p2Score.text);
+            BallMove ballScript = collider.gameObject.GetComponent<BallMove>();
 
-            score1++;
-            score2++;
+            if (ballScript.hasNoOneTouched())
+            {
+                ResetPaddles();
+            }
+            else
+            {
+                if (ballScript.hasPlayerLastTouched())
+                {
+                    score1++;
+                    p1Score.text = score1.ToString();
+                }
+                else
+                {
+                    score2++;
+                    p2Score.text = score2.ToString();
+                }
+            }
 
-            p1Score.text = score1.ToString();
-            p2Score.text = score2.ToString();
-
-            collider.gameObject.GetComponent<BallMove>().ResetBall();
+            ballScript.ResetBall();
         }
+    }
+
+    void ResetPaddles()
+    {
+        playerPaddle.transform.position = new Vector3(-4.5f, 0, 0);
+        aiPaddle.transform.position = new Vector3(4.5f, 0, 0);
     }
 }

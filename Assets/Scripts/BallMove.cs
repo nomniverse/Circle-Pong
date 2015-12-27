@@ -5,6 +5,9 @@ public class BallMove : MonoBehaviour {
 
     public float speed = 2.0f;
 
+    private bool noOneTouched = true;
+    private bool playerLastTouched = false;
+
     public GameObject center;
 
 	// Use this for initialization
@@ -27,6 +30,28 @@ public class BallMove : MonoBehaviour {
         } else
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        }
+
+        playerLastTouched = false;
+        noOneTouched = true;
+    }
+
+    public bool hasPlayerLastTouched()
+    {
+        return playerLastTouched;
+    }
+
+    public bool hasNoOneTouched()
+    {
+        return noOneTouched;
+    }
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.tag == "Paddle")
+        {
+            noOneTouched = false;
+            playerLastTouched = (collider.gameObject.name == "Player");
         }
     }
 }

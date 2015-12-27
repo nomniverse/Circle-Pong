@@ -7,20 +7,19 @@ public class CircleMovePlayer : CircleMoveAI {
 
 	// Use this for initialization
 	void Start () {
-        v = transform.position - center.position;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetAxis("Horizontal") > (0.0 + deadzone) || Input.GetAxis("Vertical") > (0.0 + deadzone))
+        v = transform.position - center.position;
+        if (Input.GetAxis("Horizontal 1") > (0.0 + deadzone) || Input.GetAxis("Vertical 1") > (0.0 + deadzone))
         {
-            v = Quaternion.AngleAxis(degreesPerSecond * Time.deltaTime, Vector3.forward) * v;
-            transform.position = center.position + v;
+            MoveClockwise();
         }
-        else if (Input.GetAxis("Horizontal") < (0.0 - deadzone) || Input.GetAxis("Vertical") < (0.0 - deadzone))
+        else if (Input.GetAxis("Horizontal 1") < (0.0 - deadzone) || Input.GetAxis("Vertical 1") < (0.0 - deadzone))
         {
-            v = Quaternion.AngleAxis(degreesPerSecond * Time.deltaTime, Vector3.back) * v;
-            transform.position = center.position + v;
+            MoveAntiClockwise();
         }
         else {}
 
