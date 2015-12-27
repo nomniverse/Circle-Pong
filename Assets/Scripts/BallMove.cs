@@ -17,18 +17,6 @@ public class BallMove : MonoBehaviour {
 	
 	}
 
-    void OnCollisionEnter2D(Collision2D collider)
-    {
-        if (collider.gameObject.tag == "Paddle")
-        {
-            Debug.Log("Swag");
-            GetComponent<Rigidbody2D>().velocity *= -1;
-        } else
-        {
-            Debug.Log("No Swag");
-        }
-    }
-
     public void ResetBall()
     {
         transform.position = center.transform.position;
