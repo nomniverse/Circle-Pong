@@ -5,6 +5,8 @@ public class BallMove : MonoBehaviour {
 
     public float speed = 2.0f;
 
+    public GameObject center;
+
 	// Use this for initialization
 	void Start () {
         GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
@@ -14,4 +16,29 @@ public class BallMove : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.tag == "Paddle")
+        {
+            Debug.Log("Swag");
+            GetComponent<Rigidbody2D>().velocity *= -1;
+        } else
+        {
+            Debug.Log("No Swag");
+        }
+    }
+
+    public void ResetBall()
+    {
+        transform.position = center.transform.position;
+        
+        if (Random.Range(0,2) == 0)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
+        } else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        }
+    }
 }
